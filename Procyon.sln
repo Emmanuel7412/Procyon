@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Procyon.Core", "Procyon.Core", "{8907FD67-CB01-4506-8AFF-4B8E1E59311B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Procyon.Core", "Procyon.Core\Procyon.Core.csproj", "{D78C81B7-343C-4202-8E9F-456CA0E56A77}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D78C81B7-343C-4202-8E9F-456CA0E56A77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D78C81B7-343C-4202-8E9F-456CA0E56A77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D78C81B7-343C-4202-8E9F-456CA0E56A77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D78C81B7-343C-4202-8E9F-456CA0E56A77}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D78C81B7-343C-4202-8E9F-456CA0E56A77} = {8907FD67-CB01-4506-8AFF-4B8E1E59311B}
+	EndGlobalSection
+EndGlobal
