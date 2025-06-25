@@ -1,10 +1,7 @@
-﻿
-using SharedKernel;
-
-namespace Core.Abstractions
+﻿namespace Core.Abstractions
 {
     public interface ICommandDispatcher
     {
-        Task<Result<TResponse>> Dispatch<TCommand, TResponse>(TCommand command, CancellationToken cancellation);
+        Task<TCommandResult> Dispatch<TCommand, TCommandResult>(TCommand command, CancellationToken cancellation);
     }
 }

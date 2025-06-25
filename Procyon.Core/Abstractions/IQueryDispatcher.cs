@@ -1,9 +1,7 @@
-﻿using SharedKernel;
-
-namespace Core.Abstractions
+﻿namespace Core.Abstractions
 {
     public interface IQueryDispatcher
     {
-        Task<Result<TResponse>> Dispatch<TQuery, TResponse>(TQuery query, CancellationToken cancellation);
+        Task<TQueryResult> Dispatch<TQuery, TQueryResult>(TQuery query, CancellationToken cancellation);
     }
 }
