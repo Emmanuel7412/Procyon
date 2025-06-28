@@ -1,6 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 
-using SharedKernel;
+using Core.Shared;
 
 namespace Domain.Users;
 

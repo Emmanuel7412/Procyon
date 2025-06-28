@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
-namespace SharedKernel
+namespace Core.Shared
 {
     public static class Ensure
     {

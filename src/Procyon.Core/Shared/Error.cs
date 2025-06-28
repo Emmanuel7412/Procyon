@@ -1,4 +1,4 @@
-﻿namespace SharedKernel
+﻿namespace Core.Shared
 {
     public sealed record Error(string Code, string Description)
     {

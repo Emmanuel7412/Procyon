@@ -1,4 +1,4 @@
-﻿namespace SharedKernel
+﻿namespace Core.Shared
 {
     public abstract class Entity
     {

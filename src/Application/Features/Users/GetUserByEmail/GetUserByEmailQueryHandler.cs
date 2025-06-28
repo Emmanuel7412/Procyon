@@ -4,7 +4,6 @@ using Application.Features.Users.GetUserByEmail;
 using Core.Abstractions;
 using Domain;
 using Domain.Users;
-using SharedKernel;
 
 namespace Application.Features.Users.GetUserById
 {
