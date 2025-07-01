@@ -14,8 +14,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\Domain.csproj" />
-    <ProjectReference Include="..\Procyon.Core\Core.csproj" />
+    <Folder Include="Features\UserManager\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Procyon.Core\Procyon.Core.csproj" />
+    <ProjectReference Include="..\ManageUser.Domain\ManageUser.Domain.csproj" />
   </ItemGroup>
 
 </Project>

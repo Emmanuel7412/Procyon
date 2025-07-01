@@ -1,6 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 
-namespace Application.Features.Users.GetUserByEmail;
+namespace ManageUser.API.Features.Users.GetUserByEmail;
 
 public sealed record UserResponse
 {
