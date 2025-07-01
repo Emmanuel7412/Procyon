@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{81E20BC0-4C67-4887-A4ED-C56DA6B96874}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{9B216D9D-F307-4DFF-8622-F4234C49095C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Procyon.API", "Application\Procyon.API.csproj", "{9B216D9D-F307-4DFF-8622-F4234C49095C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +21,6 @@ Global
 		{D78C81B7-343C-4202-8E9F-456CA0E56A77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D78C81B7-343C-4202-8E9F-456CA0E56A77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D78C81B7-343C-4202-8E9F-456CA0E56A77}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2421CB35-2433-4652-8BB1-C5987AF73B5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2421CB35-2433-4652-8BB1-C5987AF73B5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2421CB35-2433-4652-8BB1-C5987AF73B5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2421CB35-2433-4652-8BB1-C5987AF73B5C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6905407E-5ED6-4CB2-ACE3-1A9CF1E24758}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6905407E-5ED6-4CB2-ACE3-1A9CF1E24758}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6905407E-5ED6-4CB2-ACE3-1A9CF1E24758}.Release|Any CPU.ActiveCfg = Release|Any CPU
