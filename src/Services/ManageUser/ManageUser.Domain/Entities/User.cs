@@ -8,7 +8,7 @@ namespace ManageUser.Domain.Entities;
 public class User : Entity<UserId>
 {
     public required string Email { get; set; }
-    public string FirstName { get; set; } = default!;
+    public required string FirstName { get; set; }
     public string LastName { get; set; } = default!;
-    public string PasswordHash { get; set; } = default!;
+    public required string PasswordHash { get; set; }
 }

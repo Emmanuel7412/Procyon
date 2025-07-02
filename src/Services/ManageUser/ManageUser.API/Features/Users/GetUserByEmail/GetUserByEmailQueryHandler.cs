@@ -9,8 +9,8 @@ namespace ManageUser.API.Features.Users.GetUserByEmail
     {
         private readonly List<User> _users = new List<User>()
         {
-            new(){Id = UserId.Of(Guid.NewGuid()), FirstName = "Manu", LastName="Poirier", Email="manu@gmail.com"},
-            new(){Id = UserId.Of(Guid.NewGuid()), FirstName = "Anna", LastName="Albino", Email="anna@gmail.com"},
+            new(){Id = UserId.Of(Guid.NewGuid()), FirstName = "Manu", LastName="Poirier", Email="manu@gmail.com", PasswordHash = "hashedpassword1"},
+            new(){Id = UserId.Of(Guid.NewGuid()), FirstName = "Anna", LastName="Albino", Email="anna@gmail.com", PasswordHash = "hashedpassword2"},
         };
 
         public GetUserByEmailQueryHandler() { }

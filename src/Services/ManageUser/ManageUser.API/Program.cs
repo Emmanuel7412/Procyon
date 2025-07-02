@@ -2,6 +2,8 @@
 
 using System.Text;
 using Core;
+using ManageUser.Infrastructure.Data.Extensions;
+using ManageUser.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -11,6 +13,7 @@ builder.Services.RegisterQueryHandlers();
 builder.Services.RegisterCommandHandlers();
 
 // Add services to the container.
+builder.Services.AddDataInfrastructure(builder.Configuration);
 builder.Services.AddAuthentication(option =>
 {
     option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -48,6 +51,10 @@ if (app.Environment.IsDevelopment())
 
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+if (app.Environment.IsDevelopment())
+{
+    await app.Services.InitializeDatabaseAsync();
 }
 
 app.UseAuthorization();
