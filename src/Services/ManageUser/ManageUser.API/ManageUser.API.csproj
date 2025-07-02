@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Procyon.Core\Procyon.Core.csproj" />
+    <ProjectReference Include="..\ManagerUser.Application\ManageUser.Application.csproj" />
     <ProjectReference Include="..\ManageUser.Domain\ManageUser.Domain.csproj" />
     <ProjectReference Include="..\ManageUser.Infrastructure\ManageUser.Infrastructure.csproj" />
   </ItemGroup>

@@ -4,6 +4,7 @@ using System.Text;
 using Core;
 using ManageUser.Infrastructure.Data.Extensions;
 using ManageUser.Infrastructure.Data;
+using ManageUser.Application;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -13,7 +14,9 @@ builder.Services.RegisterQueryHandlers();
 builder.Services.RegisterCommandHandlers();
 
 // Add services to the container.
-builder.Services.AddDataInfrastructure(builder.Configuration);
+builder.Services
+    .AddApplicationServices(builder.Configuration)
+    .AddDataInfrastructure(builder.Configuration);
 builder.Services.AddAuthentication(option =>
 {
     option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
