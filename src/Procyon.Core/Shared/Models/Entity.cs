@@ -1,10 +1,12 @@
-﻿namespace Core.Shared
+﻿using Core.Shared;
+
+namespace Procyon.Core.Shared.Models
 {
-    public abstract class Entity
+    public abstract class Entity<T> : IEntity<T>
     {
         private readonly List<IDomainEvent> _domainEvents = [];
 
-        protected Entity(Guid id)
+        protected Entity(T id)
         {
             Id = id;
         }
@@ -13,7 +15,7 @@
         {
         }
 
-        public Guid Id { get; init; }
+        public T Id { get; set; }
 
         public List<IDomainEvent> DomainEvents => [.. _domainEvents];
 

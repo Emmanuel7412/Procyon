@@ -1,8 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 
-using Application.Features.Users.GetUserByEmail;
-using Application.Features.Users.GetUserById;
 using Core.Abstractions;
+using ManageUser.API.Features.Users.GetUserByEmail;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Controllers
