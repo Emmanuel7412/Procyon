@@ -14,8 +14,6 @@ namespace ManageUser.API.Endpoints;
 public record UserLoginRequest(UserLogin UserLogin);
 public static class AuthenticationEndpoints
 {
-    // how to use it in program.cs
-    // app.MapAuthenticationEndpoints();
     public static void MapAuthenticationEndpoints(this IEndpointRouteBuilder app)
     {
         // Define your authentication endpoints here
