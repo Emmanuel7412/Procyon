@@ -4,7 +4,7 @@ using ManageUser.Domain.DTOs;
 
 namespace ManageUser.Domain.Abstractions;
 
-public interface ITokenService
+public interface ITokenTools
 {
     Task<JwtSecurityToken> GenerateTokenAsync(UserTokenGenerate userTokenGenerate);
 }

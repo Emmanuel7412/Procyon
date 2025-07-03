@@ -7,16 +7,19 @@ using ManageUser.Infrastructure.Data;
 using ManageUser.Application;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using ManageUser.API.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.RegisterQueryHandlers();
-builder.Services.RegisterCommandHandlers();
 
 // Add services to the container.
 builder.Services
     .AddApplicationServices(builder.Configuration)
     .AddDataInfrastructure(builder.Configuration);
+
+builder.Services.RegisterQueryHandlers();
+builder.Services.RegisterCommandHandlers();
+
+
 builder.Services.AddAuthentication(option =>
 {
     option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -63,5 +66,7 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapAuthenticationEndpoints();
 
 app.Run();

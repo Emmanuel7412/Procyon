@@ -10,7 +10,7 @@ namespace Core
     {
         public static IServiceCollection RegisterQueryHandlers(this IServiceCollection services)
         {
-            services.AddSingleton<IQueryDispatcher, QueryDispatcher>();
+            services.AddScoped<IQueryDispatcher, QueryDispatcher>();
 
             foreach (var type in AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(s => s.GetTypes())
@@ -19,7 +19,7 @@ namespace Core
                 foreach (var interfaceType in type.GetInterfaces()
                     .Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IQueryHandler<,>)))
                 {
-                    services.AddSingleton(interfaceType, type);
+                    services.AddScoped(interfaceType, type);
                 }
             }
 
@@ -28,7 +28,7 @@ namespace Core
 
         public static IServiceCollection RegisterCommandHandlers(this IServiceCollection services)
         {
-            services.AddSingleton<ICommandDispatcher, CommandDispatcher>();
+            services.AddScoped<ICommandDispatcher, CommandDispatcher>();
 
             foreach (var type in AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(s => s.GetTypes())
@@ -37,7 +37,7 @@ namespace Core
                 foreach (var interfaceType in type.GetInterfaces()
                     .Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICommandHandler<,>)))
                 {
-                    services.AddSingleton(interfaceType, type);
+                    services.AddScoped(interfaceType, type);
                 }
             }
 
