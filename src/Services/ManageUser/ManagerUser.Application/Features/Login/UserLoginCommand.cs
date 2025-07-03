@@ -9,4 +9,4 @@ namespace ManageUser.Application.Features.Login;
 public sealed record UserLoginCommand(UserLogin UserLogin)
     : ICommand<UserLoginResponse>;
 
-public record UserLoginResponse(JwtSecurityToken? Token);
+public record UserLoginResponse(string? AccessToken, UserId UserId, DateTime ExpireIn);

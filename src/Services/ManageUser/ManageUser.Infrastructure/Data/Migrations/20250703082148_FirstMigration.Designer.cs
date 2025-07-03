@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ManageUser.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250702100433_FirstMigration")]
+    [Migration("20250703082148_FirstMigration")]
     partial class FirstMigration
     {
         /// <inheritdoc />
@@ -28,6 +28,7 @@ namespace ManageUser.Infrastructure.Data.Migrations
             modelBuilder.Entity("ManageUser.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Email")

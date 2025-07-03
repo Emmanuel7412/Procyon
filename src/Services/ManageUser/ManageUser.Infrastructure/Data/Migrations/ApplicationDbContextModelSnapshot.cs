@@ -25,6 +25,7 @@ namespace ManageUser.Infrastructure.Data.Migrations
             modelBuilder.Entity("ManageUser.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Email")

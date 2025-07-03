@@ -4,6 +4,8 @@ using System.Security.Claims;
 using System.Text;
 using ManageUser.Domain.Abstractions;
 using ManageUser.Domain.DTOs;
+using ManageUser.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -11,6 +13,7 @@ namespace ManageUser.Application;
 
 public class TokenTools(IConfiguration configuration) : ITokenTools
 {
+    private readonly IPasswordHasher<User> _passwordHasher = new PasswordHasher<User>();
     public Task<JwtSecurityToken> GenerateTokenAsync(UserTokenGenerate userTokenGenerate)
     {
         // Implement token generation logic here
@@ -37,5 +40,21 @@ public class TokenTools(IConfiguration configuration) : ITokenTools
             expires: userTokenGenerate.ExpireDate,
             signingCredentials: creds
         ));
+    }
+
+    public string HashPassword(User user, string password) => _passwordHasher.HashPassword(user, password);
+
+    public bool VerifyPassword(User user, string password)
+    {
+        try
+        {
+            var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, password);
+            return result == PasswordVerificationResult.Success;
+        }
+        catch (Exception)
+        {
+            // Handle exceptions related to password verification
+            throw new InvalidOperationException("Password verification failed. Please check the password format or hashing algorithm.");
+        }
     }
 }

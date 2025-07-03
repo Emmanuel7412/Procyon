@@ -10,5 +10,5 @@ public class User : Entity<UserId>
     public required string Email { get; set; }
     public required string FirstName { get; set; }
     public string LastName { get; set; } = default!;
-    public required string PasswordHash { get; set; }
+    public string PasswordHash { get; set; } = default!;
 }

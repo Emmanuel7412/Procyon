@@ -17,13 +17,12 @@ namespace ManageUser.Application.Features.Login
     public class UserLoginCommandHandler(IUserRepository userRepository, ITokenTools tokenTools, IConfiguration configuration) : ICommandHandler<UserLoginCommand, UserLoginResponse>
     {
 
-        private readonly IPasswordHasher<User> _passwordHasher = new PasswordHasher<User>();
-        public async Task<UserLoginResponse> Handle(UserLoginCommand command, CancellationToken cancellation)
+        public async Task<UserLoginResponse?> Handle(UserLoginCommand command, CancellationToken cancellation)
         {
             User? user = await userRepository.FindByEmailAsync(command.UserLogin.Email);
-            if (user == null || string.IsNullOrEmpty(command.UserLogin.Password) || !VerifyPassword(user, command.UserLogin.Password))
+            if (user == null || string.IsNullOrEmpty(command.UserLogin.Password) || !tokenTools.VerifyPassword(user, command.UserLogin.Password))
             {
-                return new UserLoginResponse(null); ; // User not found or password is incorrect
+                return null; // User not found or password is incorrect
             }
             var token = await tokenTools.GenerateTokenAsync(new UserTokenGenerate
             {
@@ -32,24 +31,8 @@ namespace ManageUser.Application.Features.Login
                     double.TryParse(configuration["Jwt:ExpireAccess"], out var expireMinutes)
                      ? expireMinutes : throw new InvalidOperationException("JWT expiration time not configured (Jwt:ExpireAccess)."))
             });
-            return new UserLoginResponse(token);
+            return new UserLoginResponse(new JwtSecurityTokenHandler().WriteToken(token), user.Id, token.ValidTo);
 
-        }
-
-
-        private bool VerifyPassword(User user, string password)
-        {
-            try
-            {
-                var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, password);
-                return result == PasswordVerificationResult.Success;
-            }
-            catch (Exception)
-            {
-                // Handle exceptions related to password verification
-                throw new InvalidOperationException("Password verification failed. Please check the password format or hashing algorithm.");
-
-            }
         }
     }
 }
