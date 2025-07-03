@@ -9,17 +9,19 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.6">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.12.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\UserManager\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\Procyon.Core\Procyon.Core.csproj" />
+    <ProjectReference Include="..\ManagerUser.Application\ManageUser.Application.csproj" />
     <ProjectReference Include="..\ManageUser.Domain\ManageUser.Domain.csproj" />
+    <ProjectReference Include="..\ManageUser.Infrastructure\ManageUser.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

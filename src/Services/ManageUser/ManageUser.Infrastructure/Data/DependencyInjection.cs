@@ -13,7 +13,7 @@ public static class DependencyInjection
     {
         // Register your DbContext and other data-related services here
         services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+            options.UseNpgsql(configuration.GetConnectionString("DatabasePG")));
 
         // Register other data-related services, repositories, etc.
         services.AddScoped<IUserRepository, UserRepository>();

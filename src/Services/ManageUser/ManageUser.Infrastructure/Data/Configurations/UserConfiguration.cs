@@ -15,14 +15,13 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasConversion(
                 id => id.Value,
                 value => UserId.Of(value))
-            .IsRequired();
+            .IsRequired()
+            .ValueGeneratedOnAdd();
         builder.Property(u => u.FirstName).HasMaxLength(50).IsRequired();
         builder.Property(u => u.LastName).HasMaxLength(50);
         builder.Property(u => u.Email)
             .IsRequired()
             .HasMaxLength(256);
         builder.HasIndex(u => u.Email).IsUnique();
-
-        throw new NotImplementedException();
     }
 }

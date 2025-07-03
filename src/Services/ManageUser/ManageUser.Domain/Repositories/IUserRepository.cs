@@ -6,5 +6,6 @@ public interface IUserRepository
 {
 
     Task<User?> FindByEmailAsync(string email);
+    Task<UserId> CreateUserAsync(User user, CancellationToken cancellationToken = default);
 
 }
