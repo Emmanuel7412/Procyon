@@ -2,12 +2,15 @@
 
 using System.Text;
 using Core;
+
 using ManageUser.Infrastructure.Data.Extensions;
 using ManageUser.Infrastructure.Data;
 using ManageUser.Application;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using ManageUser.API.Endpoints;
+using Procyon.Core.Exceptions.Handler;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +22,7 @@ builder.Services
 builder.Services.RegisterQueryHandlers();
 builder.Services.RegisterCommandHandlers();
 
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 builder.Services.AddAuthentication(option =>
 {
@@ -62,7 +66,7 @@ if (app.Environment.IsDevelopment())
 {
     await app.Services.InitializeDatabaseAsync();
 }
-
+app.UseExceptionHandler(options => { });
 app.UseAuthorization();
 
 app.MapControllers();

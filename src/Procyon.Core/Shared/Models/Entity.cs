@@ -13,6 +13,7 @@ namespace Procyon.Core.Shared.Models
 
         protected Entity()
         {
+            Id = default!;
         }
 
         public T Id { get; set; }
