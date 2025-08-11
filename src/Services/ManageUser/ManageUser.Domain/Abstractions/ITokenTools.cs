@@ -1,4 +1,3 @@
-using System;
 using System.IdentityModel.Tokens.Jwt;
 using ManageUser.Domain.DTOs;
 using ManageUser.Domain.Entities;

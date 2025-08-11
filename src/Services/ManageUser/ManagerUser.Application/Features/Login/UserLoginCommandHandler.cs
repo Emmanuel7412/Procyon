@@ -1,15 +1,9 @@
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Threading.Tasks;
 using Core.Abstractions;
-using ManageUser.Application;
 using ManageUser.Domain.Abstractions;
 using ManageUser.Domain.DTOs;
 using ManageUser.Domain.Entities;
 using ManageUser.Domain.Repositories;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 
 namespace ManageUser.Application.Features.Login

@@ -1,5 +1,3 @@
-using System;
-
 namespace Procyon.Core.Shared.Models;
 
 public interface IEntity<T>

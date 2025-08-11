@@ -1,5 +1,3 @@
-using System;
-
 namespace ManageUser.Domain.DTOs;
 
 public readonly record struct UserRegister

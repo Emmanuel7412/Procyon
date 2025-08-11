@@ -1,4 +1,3 @@
-using System;
 using ManageUser.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

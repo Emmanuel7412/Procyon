@@ -1,4 +1,3 @@
-using System;
 using ManageUser.Domain.Repositories;
 using ManageUser.Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;

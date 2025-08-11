@@ -1,4 +1,3 @@
-using System;
 using Core.Abstractions;
 using ManageUser.Domain.DTOs;
 using ManageUser.Domain.Entities;

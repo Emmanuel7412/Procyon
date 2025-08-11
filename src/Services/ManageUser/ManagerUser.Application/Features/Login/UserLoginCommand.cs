@@ -1,5 +1,3 @@
-using System;
-using System.IdentityModel.Tokens.Jwt;
 using Core.Abstractions;
 using Domain.Users.DTOs;
 using ManageUser.Domain.Entities;

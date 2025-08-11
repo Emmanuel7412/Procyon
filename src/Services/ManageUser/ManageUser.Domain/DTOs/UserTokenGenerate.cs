@@ -1,4 +1,3 @@
-using System;
 using ManageUser.Domain.Entities;
 
 namespace ManageUser.Domain.DTOs;

@@ -1,6 +1,5 @@
 using ManageUser.Domain.Entities;
 using ManageUser.Domain.Repositories;
-using ManageUser.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace ManageUser.Infrastructure.Data.Repositories;

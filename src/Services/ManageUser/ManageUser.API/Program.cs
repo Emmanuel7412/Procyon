@@ -1,16 +1,14 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 
+using System.Reflection;
 using System.Text;
 using Core;
-
-using ManageUser.Infrastructure.Data.Extensions;
-using ManageUser.Infrastructure.Data;
+using ManageUser.API.Extensions;
 using ManageUser.Application;
+using ManageUser.Infrastructure.Data;
+using ManageUser.Infrastructure.Data.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using ManageUser.API.Endpoints;
-using Procyon.Core.Exceptions.Handler;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,7 +50,11 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
+
 var app = builder.Build();
+
+app.MapEndpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -71,6 +73,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapAuthenticationEndpoints();
 
 app.Run();
