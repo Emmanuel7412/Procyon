@@ -2,6 +2,7 @@ using Core.Abstractions;
 using Domain.Users.DTOs;
 using ManageUser.Application.Features.Register;
 using ManageUser.Domain.DTOs;
+using Procyon.Core.Shared.API;
 
 namespace ManageUser.API.Endpoints;
 
