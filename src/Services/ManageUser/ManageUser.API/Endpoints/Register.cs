@@ -6,7 +6,6 @@ using Procyon.Core.Shared.API;
 
 namespace ManageUser.API.Endpoints;
 
-public record UserLoginRequest(UserLogin UserLogin);
 internal sealed class Register : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)

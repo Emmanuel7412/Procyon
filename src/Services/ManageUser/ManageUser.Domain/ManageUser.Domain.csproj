@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Entities\ApplicationUser" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\Procyon.Core\Procyon.Core.csproj" />
   </ItemGroup>
 
