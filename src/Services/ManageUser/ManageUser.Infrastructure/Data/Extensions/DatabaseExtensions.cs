@@ -1,6 +1,6 @@
 using System;
+using ManageUser.Domain.Constants;
 using ManageUser.Domain.Entities;
-using ManageUser.Infrastructure.Data.Constants;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,34 +35,28 @@ public static class DatabaseExtensions
         // Ensure roles exist
         await CreateRoles(logger, roleManager, Roles.Admin, Roles.User);
 
-
-
         // Seed users
 
-        if (!await userManager.Users.AnyAsync())
+        ApplicationUser user1 = new()
         {
-            ApplicationUser user1 = new()
-            {
-                UserName = "manu@gmail.com",
-                FirstName = "Manu",
-                LastName = "Poirier",
-                Email = "manu@gmail.com",
-                EmailConfirmed = true,
-                SecurityStamp = Guid.NewGuid().ToString()
-            };
-            ApplicationUser user2 = new()
-            {
-                UserName = "anna@gmail.com",
-                FirstName = "Anna",
-                LastName = "Albino",
-                Email = "anna@gmail.com",
-                EmailConfirmed = true,
-                SecurityStamp = Guid.NewGuid().ToString()
-            };
+            UserName = "manu@gmail.com",
+            FirstName = "Manu",
+            LastName = "Poirier",
+            Email = "manu@gmail.com",
+            EmailConfirmed = true,
+            SecurityStamp = Guid.NewGuid().ToString()
+        };
+        ApplicationUser user2 = new()
+        {
+            UserName = "anna@gmail.com",
+            FirstName = "Anna",
+            LastName = "Albino",
+            Email = "anna@gmail.com",
+            EmailConfirmed = true,
+            SecurityStamp = Guid.NewGuid().ToString()
+        };
 
-            await CreateUser(logger, userManager, new Tuple<ApplicationUser, string>(user1, Roles.Admin), new Tuple<ApplicationUser, string>(user2, Roles.User));
-
-        }
+        await CreateUser(logger, userManager, new Tuple<ApplicationUser, string>(user1, Roles.Admin), new Tuple<ApplicationUser, string>(user2, Roles.User));
 
     }
 
@@ -71,30 +65,33 @@ public static class DatabaseExtensions
     {
         foreach (var userInfo in userInfos)
         {
-
-            var createUserResult = await userManager
-                  .CreateAsync(user: userInfo.Item1, password: "Pass@123");
-
-            // Validate user creatio
-            if (createUserResult.Succeeded == false)
+            if (await userManager.FindByEmailAsync(userInfo.Item1?.Email) == null)
             {
-                var errors = createUserResult.Errors.Select(e => e.Description);
-                logger.LogError(
-                    $"Failed to create admin user. Errors: {string.Join(", ", errors)}"
-                );
 
+                var createUserResult = await userManager
+                      .CreateAsync(user: userInfo.Item1, password: "Pass@123");
+
+                // Validate user creatio
+                if (createUserResult.Succeeded == false)
+                {
+                    var errors = createUserResult.Errors.Select(e => e.Description);
+                    logger.LogError(
+                        $"Failed to create admin user. Errors: {string.Join(", ", errors)}"
+                    );
+
+                }
+
+                // adding role to user
+                var addUserToRoleResult = await userManager
+                                .AddToRoleAsync(user: userInfo.Item1, role: userInfo.Item2);
+
+                if (addUserToRoleResult.Succeeded == false)
+                {
+                    var errors = addUserToRoleResult.Errors.Select(e => e.Description);
+                    logger.LogError($"Failed to add {userInfo.Item2} role to user. Errors : {string.Join(",", errors)}");
+                }
+                logger.LogInformation("User is created");
             }
-
-            // adding role to user
-            var addUserToRoleResult = await userManager
-                            .AddToRoleAsync(user: userInfo.Item1, role: userInfo.Item2);
-
-            if (addUserToRoleResult.Succeeded == false)
-            {
-                var errors = addUserToRoleResult.Errors.Select(e => e.Description);
-                logger.LogError($"Failed to add {userInfo.Item2} role to user. Errors : {string.Join(",", errors)}");
-            }
-            logger.LogInformation("User is created");
         }
     }
 

@@ -11,6 +11,7 @@ using ManageUser.Infrastructure.Data.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using Procyon.Core.Exceptions.Handler;
 
 var builder = WebApplication.CreateBuilder(args);
 
