@@ -2,7 +2,6 @@
 
 
 using Microsoft.AspNetCore.Identity;
-using Procyon.Core.Shared.Models;
 
 namespace ManageUser.Domain.Entities;
 

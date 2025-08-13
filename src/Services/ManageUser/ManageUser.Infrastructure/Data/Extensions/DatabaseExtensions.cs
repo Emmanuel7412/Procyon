@@ -1,4 +1,3 @@
-using System;
 using ManageUser.Domain.Constants;
 using ManageUser.Domain.Entities;
 using Microsoft.AspNetCore.Identity;

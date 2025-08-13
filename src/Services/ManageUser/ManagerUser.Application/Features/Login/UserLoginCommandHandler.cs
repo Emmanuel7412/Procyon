@@ -2,7 +2,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Core.Abstractions;
 using ManageUser.Domain.Abstractions;
-using ManageUser.Domain.DTOs;
 using ManageUser.Domain.Entities;
 using ManageUser.Domain.Repositories;
 using Microsoft.AspNetCore.Identity;
@@ -11,8 +10,8 @@ using Microsoft.Extensions.Configuration;
 namespace ManageUser.Application.Features.Login
 {
     public class UserLoginCommandHandler(UserManager<ApplicationUser> userManager,
-                 RoleManager<IdentityRole> roleManager, IUserRepository userRepository,
-                  ITokenTools tokenTools, IConfiguration configuration) : ICommandHandler<UserLoginCommand, UserLoginResponse>
+                ITokenRepository userRepository,
+                  ITokenTools tokenTools) : ICommandHandler<UserLoginCommand, UserLoginResponse>
     {
 
         public async Task<UserLoginResponse?> Handle(UserLoginCommand command, CancellationToken cancellation)
@@ -54,7 +53,7 @@ namespace ManageUser.Application.Features.Login
             };
             await userRepository.SaveTokenInfo(tokenInfo, cancellation);
 
-            return new UserLoginResponse(token, refreshToken, user.Id, DateTime.UtcNow.AddDays(7));
+            return new UserLoginResponse(token, refreshToken, user.Id);
         }
     }
 }

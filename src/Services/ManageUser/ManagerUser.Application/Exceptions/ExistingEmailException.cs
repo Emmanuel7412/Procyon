@@ -1,4 +1,3 @@
-using System;
 using Procyon.Core.Exceptions;
 
 namespace ManageUser.Application.Exceptions;

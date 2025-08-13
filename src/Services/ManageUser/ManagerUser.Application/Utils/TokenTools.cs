@@ -3,9 +3,6 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using ManageUser.Domain.Abstractions;
-using ManageUser.Domain.DTOs;
-using ManageUser.Domain.Entities;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -123,7 +120,6 @@ public class TokenTools(IConfiguration configuration) : ITokenTools
             throw new SecurityTokenException("Invalid token");
         }
 
-        // return the principal
         return principal;
 
     }

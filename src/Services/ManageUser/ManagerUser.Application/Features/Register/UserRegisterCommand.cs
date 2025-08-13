@@ -1,6 +1,5 @@
 using Core.Abstractions;
 using ManageUser.Domain.DTOs;
-using ManageUser.Domain.Entities;
 
 namespace ManageUser.Application.Features.Register;
 
