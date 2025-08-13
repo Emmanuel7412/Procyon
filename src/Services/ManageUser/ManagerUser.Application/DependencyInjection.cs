@@ -1,7 +1,3 @@
-using System;
-using Core;
-using Core.Abstractions;
-using ManageUser.Application.Features.Login;
 using ManageUser.Domain.Abstractions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

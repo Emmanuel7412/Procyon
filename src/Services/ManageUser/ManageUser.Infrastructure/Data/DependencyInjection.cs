@@ -1,4 +1,3 @@
-using System;
 using ManageUser.Domain.Repositories;
 using ManageUser.Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +15,7 @@ public static class DependencyInjection
             options.UseNpgsql(configuration.GetConnectionString("DatabasePG")));
 
         // Register other data-related services, repositories, etc.
-        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ITokenRepository, UserRepository>();
 
         return services;
     }
