@@ -17,6 +17,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+// Déclarer la politique CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngular",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200") // URL de ton app Angular
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 
 builder.Services
     .AddApplicationServices(builder.Configuration)
@@ -68,6 +80,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
+
+// Utiliser la politique CORS
+app.UseCors("AllowAngular");
 
 app.MapEndpoints();
 

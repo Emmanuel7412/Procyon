@@ -1,7 +1,9 @@
-﻿namespace Core.Abstractions
+﻿using Core.Shared;
+
+namespace Core.Abstractions
 {
     public interface ICommandDispatcher
     {
-        Task<TCommandResult> Dispatch<TCommand, TCommandResult>(TCommand command, CancellationToken cancellation);
+        Task<Result<TCommandResult>> Dispatch<TCommand, TCommandResult>(TCommand command, CancellationToken cancellation) where TCommand : ICommand<TCommandResult>;
     }
 }

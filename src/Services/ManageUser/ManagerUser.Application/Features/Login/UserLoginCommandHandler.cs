@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Core.Abstractions;
+using Core.Shared;
 using ManageUser.Domain.Abstractions;
 using ManageUser.Domain.Entities;
 using ManageUser.Domain.Repositories;
@@ -14,20 +15,21 @@ namespace ManageUser.Application.Features.Login
                   ITokenTools tokenTools) : ICommandHandler<UserLoginCommand, UserLoginResponse>
     {
 
-        public async Task<UserLoginResponse?> Handle(UserLoginCommand command, CancellationToken cancellation)
+        public async Task<Result<UserLoginResponse>> Handle(UserLoginCommand command, CancellationToken cancellation)
         {
             ApplicationUser? user = await userManager.FindByEmailAsync(command.UserLogin.Email);
 
             if (user == null || !await userManager.CheckPasswordAsync(user, command.UserLogin.Password))
             {
-                return null; // Invalid credentials
+                return Result.Failure<UserLoginResponse>(Error.InvalidCredentials); // Invalid credentials
             }
 
             // creating the necessary claims
             List<Claim> authClaims = [
                     new (ClaimTypes.Name, user.UserName),
-                new ("Firstname", user.FirstName),
-                new ("Lastname", user.LastName),
+                    new (ClaimTypes.Email, user.Email),
+                new ("firstname", user.FirstName),
+                new ("lastname", user.LastName),
                 new (JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), 
                 // unique id for token
         ];
@@ -53,7 +55,7 @@ namespace ManageUser.Application.Features.Login
             };
             await userRepository.SaveTokenInfo(tokenInfo, cancellation);
 
-            return new UserLoginResponse(token, refreshToken, user.Id);
+            return Result.Success(new UserLoginResponse(token, refreshToken, user.Id));
         }
     }
 }

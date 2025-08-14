@@ -1,6 +1,8 @@
 using Core.Abstractions;
+using Core.Shared;
 using ManageUser.Application.Features.Register;
 using ManageUser.Domain.DTOs;
+using Procyon.Core.Extensions;
 using Procyon.Core.Shared.API;
 
 namespace ManageUser.API.Endpoints;
@@ -10,18 +12,14 @@ internal sealed class Register : IEndpoint
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
         // Define your authentication endpoints here
-        app.MapPost("/register", async (HttpContext context, UserRegister userRegister, ICommandDispatcher commandDispatcher, CancellationToken cancellationToken) =>
+        app.MapGroup("api/user").MapPost("/register", async (HttpContext context, UserRegister userRegister, ICommandDispatcher commandDispatcher, CancellationToken cancellationToken) =>
         {
             // Handle registration logic
             UserRegisterCommand userRegisterCommand = new(userRegister);
-            UserRegisterResponse userRegisterResponse = await commandDispatcher.Dispatch<UserRegisterCommand, UserRegisterResponse>(userRegisterCommand, cancellationToken);
-            if (userRegisterResponse.UserId == null)
-            {
-                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                return Results.InternalServerError("Registration failed");
-            }
-            return Results.Ok(userRegisterResponse);
-
+            Result<UserRegisterResponse> result = await commandDispatcher.Dispatch<UserRegisterCommand, UserRegisterResponse>(userRegisterCommand, cancellationToken);
+            return result.Match(
+                onSuccess: response => Results.Ok(response),
+                onFailure: result => Results.Problem(title: result.Error.Code, detail: result.Error.Description, statusCode: result.Error.StatusCode));
         });
     }
 

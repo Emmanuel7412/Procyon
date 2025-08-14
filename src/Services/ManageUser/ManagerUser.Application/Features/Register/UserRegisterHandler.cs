@@ -1,4 +1,5 @@
 using Core.Abstractions;
+using Core.Shared;
 using ManageUser.Application.Exceptions;
 using ManageUser.Domain.Constants;
 using ManageUser.Domain.Entities;
@@ -10,7 +11,7 @@ namespace ManageUser.Application.Features.Register;
 
 public class UserRegisterHandler(UserManager<ApplicationUser> userManager, ILogger<UserRegisterHandler> logger) : ICommandHandler<UserRegisterCommand, UserRegisterResponse>
 {
-    public async Task<UserRegisterResponse> Handle(UserRegisterCommand command, CancellationToken cancellation)
+    public async Task<Result<UserRegisterResponse>> Handle(UserRegisterCommand command, CancellationToken cancellation)
     {
 
         var user = command.UserRegister;
@@ -49,7 +50,7 @@ public class UserRegisterHandler(UserManager<ApplicationUser> userManager, ILogg
             var errors = addUserToRoleResult.Errors.Select(e => e.Description);
             logger.LogError($"Failed to add role to the user. Errors : {string.Join(",", errors)}");
         }
-        return new UserRegisterResponse(newUser.Id);
+        return Result.Success(new UserRegisterResponse(newUser.Id));
 
     }
 }

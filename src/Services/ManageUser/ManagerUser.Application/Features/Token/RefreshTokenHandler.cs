@@ -1,4 +1,5 @@
 using Core.Abstractions;
+using Core.Shared;
 using ManageUser.Application.Exceptions;
 using ManageUser.Domain.Abstractions;
 using ManageUser.Domain.Repositories;
@@ -7,7 +8,7 @@ namespace ManageUser.Application.Features.Token;
 
 public class RefreshTokenHandler(ITokenRepository userRepository, ITokenTools tokenTools) : ICommandHandler<RefreshTokenCommand, RefreshTokenResponse>
 {
-    public async Task<RefreshTokenResponse> Handle(RefreshTokenCommand command, CancellationToken cancellation)
+    public async Task<Result<RefreshTokenResponse>> Handle(RefreshTokenCommand command, CancellationToken cancellation)
     {
         var tokenModel = command.TokenModel;
         var principal = tokenTools.GetPrincipalFromExpiredToken(tokenModel.AccessToken);
@@ -25,6 +26,6 @@ public class RefreshTokenHandler(ITokenRepository userRepository, ITokenTools to
         var newRefreshToken = tokenTools.GenerateRefreshToken();
         tokenInfo.RefreshToken = newRefreshToken;
         await userRepository.SaveTokenInfo(tokenInfo, cancellation);
-        return new RefreshTokenResponse(newAccessToken, newRefreshToken);
+        return Result.Success(new RefreshTokenResponse(newAccessToken, newRefreshToken));
     }
 }
