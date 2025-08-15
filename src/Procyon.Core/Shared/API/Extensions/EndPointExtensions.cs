@@ -3,9 +3,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Procyon.Core.Shared.API;
 
-namespace ManageUser.API.Extensions
+namespace Procyon.Core.Shared.API.Extensions
 {
     public static class EndPointExtensions
     {

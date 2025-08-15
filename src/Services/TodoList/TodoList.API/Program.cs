@@ -1,44 +1,29 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
 
 using System.Reflection;
 using System.Text;
 using Core;
-using ManageUser.Application;
-using ManageUser.Domain.Entities;
-using ManageUser.Infrastructure.Data;
-using ManageUser.Infrastructure.Data.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Procyon.Core.Exceptions.Handler;
 using Procyon.Core.Shared.API.Extensions;
-
+using TodoList.Infrastructure.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-// Déclarer la politique CORS
+builder.Services
+    //.AddApplicationServices(builder.Configuration)
+    .AddDataInfrastructure(builder.Configuration);
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngular",
+    options.AddPolicy("AllowedHosts",
         policy =>
         {
-            policy.WithOrigins("http://localhost:4200") // URL de ton app Angular
+            policy.WithOrigins(builder.Configuration["AllowedHosts"] ?? throw new InvalidOperationException("AllowedHosts not configured."))
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
 });
-
-
-builder.Services
-    .AddApplicationServices(builder.Configuration)
-    .AddDataInfrastructure(builder.Configuration);
-
-// For identity
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders();
-
 
 builder.Services.RegisterQueryHandlers();
 builder.Services.RegisterCommandHandlers();
@@ -82,7 +67,7 @@ builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 var app = builder.Build();
 
 // Utiliser la politique CORS
-app.UseCors("AllowAngular");
+app.UseCors("AllowedHosts");
 
 app.MapEndpoints();
 
@@ -96,12 +81,9 @@ if (app.Environment.IsDevelopment())
 }
 if (app.Environment.IsDevelopment())
 {
-    await app.Services.InitializeDatabaseAsync();
+    //await app.Services.InitializeDatabaseAsync();
 }
 app.UseExceptionHandler(options => { });
 app.UseAuthorization();
 
 app.MapControllers();
-
-
-app.Run();

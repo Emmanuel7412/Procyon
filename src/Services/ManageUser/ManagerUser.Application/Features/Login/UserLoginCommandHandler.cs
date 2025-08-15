@@ -24,14 +24,12 @@ namespace ManageUser.Application.Features.Login
                 return Result.Failure<UserLoginResponse>(Error.InvalidCredentials); // Invalid credentials
             }
 
-            // creating the necessary claims
             List<Claim> authClaims = [
-                    new (ClaimTypes.Name, user.UserName),
-                    new (ClaimTypes.Email, user.Email),
-                new ("firstname", user.FirstName),
-                new ("lastname", user.LastName),
-                new (JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), 
-                // unique id for token
+                new (ClaimTypes.Name, user.UserName ?? string.Empty),
+                new (ClaimTypes.Email, user.Email ?? string.Empty),
+                new ("firstname", user.FirstName ?? string.Empty),
+                new ("lastname", user.LastName ?? string.Empty),
+                new (JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
         ];
 
             var userRoles = await userManager.GetRolesAsync(user);
@@ -49,7 +47,7 @@ namespace ManageUser.Application.Features.Login
 
             var tokenInfo = new TokenInfo
             {
-                Username = user.UserName,
+                Username = user.UserName ?? string.Empty,
                 RefreshToken = refreshToken,
                 ExpiredAt = DateTime.UtcNow.AddDays(7)
             };
