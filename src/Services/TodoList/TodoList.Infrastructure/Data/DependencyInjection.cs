@@ -11,7 +11,7 @@ public static class DependencyInjection
     {
         // Register your DbContext and other data-related services here
         services.AddDbContext<TodoDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("TodoDatabase")));
+            options.UseNpgsql(configuration.GetConnectionString("DatabasePG")));
 
         // Register other data-related services, repositories, etc.
         // services.AddScoped<ITokenRepository, UserRepository>();
