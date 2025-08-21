@@ -1,7 +1,7 @@
-using Core.Abstractions;
 using Core.Shared;
 using ManageUser.Application.Features.Register;
 using ManageUser.Domain.DTOs;
+using Procyon.Core.Abstractions;
 using Procyon.Core.Extensions;
 using Procyon.Core.Shared.API;
 
@@ -12,7 +12,7 @@ internal sealed class Register : IEndpoint
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
         // Define your authentication endpoints here
-        app.MapGroup("api/user").MapPost("/register", async (HttpContext context, UserRegister userRegister, ICommandDispatcher commandDispatcher, CancellationToken cancellationToken) =>
+        app.MapGroup("api/user").MapPost("/register", async (UserRegister userRegister, ICommandDispatcher commandDispatcher, CancellationToken cancellationToken) =>
         {
             // Handle registration logic
             UserRegisterCommand userRegisterCommand = new(userRegister);

@@ -1,8 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 
-using Core.Abstractions;
 using Core.Dispatchers;
 using Microsoft.Extensions.DependencyInjection;
+using Procyon.Core.Abstractions;
 
 namespace Core
 {

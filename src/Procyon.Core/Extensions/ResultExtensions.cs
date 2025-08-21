@@ -1,5 +1,4 @@
 using Core.Shared;
-using Microsoft.AspNetCore.Http;
 
 namespace Procyon.Core.Extensions
 {

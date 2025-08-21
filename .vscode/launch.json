@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C#: ManageUser.API",
+      "type": "dotnet",
+      "request": "launch",
+      "projectPath": "${workspaceFolder}\\src\\Services\\ManageUser\\ManageUser.API\\ManageUser.API.csproj",
+      "launchConfigurationId": "TargetFramework=;http"
+    },
+    {
+      "name": "C#: TodoList.API",
+      "type": "dotnet",
+      "request": "launch",
+      "projectPath": "${workspaceFolder}\\src\\Services\\TodoList\\TodoList.API\\TodoList.API.csproj",
+      "launchConfigurationId": "TargetFramework=;http"
+    }
+  ]
+}

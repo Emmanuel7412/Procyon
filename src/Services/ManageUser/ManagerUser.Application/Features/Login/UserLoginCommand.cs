@@ -1,5 +1,5 @@
-using Core.Abstractions;
 using Domain.Users.DTOs;
+using Procyon.Core.Abstractions;
 
 namespace ManageUser.Application.Features.Login;
 

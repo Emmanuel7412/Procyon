@@ -8,16 +8,18 @@ namespace TodoList.Domain.Entities
 {
     public class ShoppingItem : Entity<Guid>
     {
-        public ShoppingItem(Guid id, DateTime createdAt, string name, int quantity, bool isPurchased)
+        public ShoppingItem(Guid id, DateTime createdAt, string createdBy, string name, int quantity, bool isPurchased)
         {
             Id = id;
             CreatedAt = createdAt;
+            CreatedBy = createdBy;
             Name = name;
             Quantity = quantity;
             IsPurchased = isPurchased;
         }
 
         public DateTime CreatedAt { get; set; }
+        public string CreatedBy { get; set; }
         public string Name { get; set; }
         public int Quantity { get; set; }
         public bool IsPurchased { get; set; }

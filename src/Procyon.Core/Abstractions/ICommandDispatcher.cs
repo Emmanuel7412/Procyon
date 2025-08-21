@@ -1,6 +1,6 @@
 ﻿using Core.Shared;
 
-namespace Core.Abstractions
+namespace Procyon.Core.Abstractions
 {
     public interface ICommandDispatcher
     {

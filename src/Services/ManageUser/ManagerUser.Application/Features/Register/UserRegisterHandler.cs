@@ -1,10 +1,10 @@
-using Core.Abstractions;
 using Core.Shared;
 using ManageUser.Application.Exceptions;
 using ManageUser.Domain.Constants;
 using ManageUser.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using Procyon.Core.Abstractions;
 using Procyon.Core.Exceptions;
 
 namespace ManageUser.Application.Features.Register;

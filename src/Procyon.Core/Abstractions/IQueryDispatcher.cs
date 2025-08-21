@@ -1,7 +1,9 @@
-﻿namespace Core.Abstractions
+﻿using Core.Shared;
+
+namespace Procyon.Core.Abstractions
 {
     public interface IQueryDispatcher
     {
-        Task<TQueryResult> Dispatch<TQuery, TQueryResult>(TQuery query, CancellationToken cancellation);
+        Task<Result<TQueryResult>> Dispatch<TQuery, TQueryResult>(TQuery query, CancellationToken cancellation) where TQuery : IQuery<TQueryResult>;
     }
 }

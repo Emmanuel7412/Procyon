@@ -1,8 +1,8 @@
-using Core.Abstractions;
 using Core.Shared;
 using ManageUser.Application.Exceptions;
 using ManageUser.Domain.Abstractions;
 using ManageUser.Domain.Repositories;
+using Procyon.Core.Abstractions;
 
 namespace ManageUser.Application.Features.Token;
 

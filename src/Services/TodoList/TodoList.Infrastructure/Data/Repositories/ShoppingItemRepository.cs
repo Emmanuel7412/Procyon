@@ -17,9 +17,9 @@ namespace TodoList.Infrastructure.Data.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<ShoppingItem?> GetByIdAsync(Guid id)
+        public async Task<ShoppingItem?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            return await _dbContext.ShoppingItems.FindAsync(id);
+            return await _dbContext.ShoppingItems.FindAsync(id, cancellationToken);
         }
 
         public async Task<IEnumerable<ShoppingItem>> GetAllAsync()
@@ -34,10 +34,10 @@ namespace TodoList.Infrastructure.Data.Repositories
                 .ToListAsync();
         }
 
-        public async Task AddAsync(ShoppingItem item)
+        public async Task AddAsync(ShoppingItem item, CancellationToken cancellation)
         {
-            await _dbContext.ShoppingItems.AddAsync(item);
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.ShoppingItems.AddAsync(item, cancellation);
+            await _dbContext.SaveChangesAsync(cancellation);
         }
 
         public async Task UpdateAsync(ShoppingItem item)
@@ -46,9 +46,9 @@ namespace TodoList.Infrastructure.Data.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id, CancellationToken cancellation)
         {
-            var item = await GetByIdAsync(id);
+            var item = await GetByIdAsync(id, cancellation);
             if (item != null)
             {
                 _dbContext.ShoppingItems.Remove(item);

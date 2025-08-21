@@ -14,6 +14,9 @@ namespace TodoList.Infrastructure.Configurations
         {
             builder.HasKey(s => s.Id);
 
+            builder.Property(s => s.CreatedBy)
+               .IsRequired();
+
             builder.Property(s => s.Name)
                 .HasMaxLength(100)
                 .IsRequired();

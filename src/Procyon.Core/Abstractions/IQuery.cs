@@ -1,6 +1,6 @@
-﻿namespace Core.Abstractions
+﻿namespace Procyon.Core.Abstractions
 {
     public interface IQuery<TResponse>
     {
-    }   
+    }
 }

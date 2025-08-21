@@ -4,15 +4,20 @@ using System.Text;
 using Core;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Procyon.Core.Abstractions;
 using Procyon.Core.Exceptions.Handler;
 using Procyon.Core.Shared.API.Extensions;
+using TodoList.Application;
+using TodoList.Application.Features.ShoppingList.Get;
+using TodoList.Domain.Dtos;
 using TodoList.Infrastructure.Data;
+using TodoList.Infrastructure.Data.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services
-    //.AddApplicationServices(builder.Configuration)
+    .AddApplicationServices(builder.Configuration)
     .AddDataInfrastructure(builder.Configuration);
 builder.Services.AddCors(options =>
 {
@@ -27,6 +32,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.RegisterQueryHandlers();
 builder.Services.RegisterCommandHandlers();
+
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
@@ -81,9 +87,12 @@ if (app.Environment.IsDevelopment())
 }
 if (app.Environment.IsDevelopment())
 {
-    //await app.Services.InitializeDatabaseAsync();
+    await app.Services.InitializeDatabaseAsync();
 }
 app.UseExceptionHandler(options => { });
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.Run();
+

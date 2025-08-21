@@ -1,12 +1,12 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Core.Abstractions;
 using Core.Shared;
 using ManageUser.Domain.Abstractions;
 using ManageUser.Domain.Entities;
 using ManageUser.Domain.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Procyon.Core.Abstractions;
 
 namespace ManageUser.Application.Features.Login
 {
@@ -25,6 +25,7 @@ namespace ManageUser.Application.Features.Login
             }
 
             List<Claim> authClaims = [
+                new ("userId", user.Id),
                 new (ClaimTypes.Name, user.UserName ?? string.Empty),
                 new (ClaimTypes.Email, user.Email ?? string.Empty),
                 new ("firstname", user.FirstName ?? string.Empty),

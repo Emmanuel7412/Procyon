@@ -1,6 +1,8 @@
-﻿namespace Core.Abstractions;
+﻿using Core.Shared;
 
-public interface IQueryHandler<in TQuery, TResponse> 
+namespace Procyon.Core.Abstractions;
+
+public interface IQueryHandler<in TQuery, TResponse> where TQuery : IQuery<TResponse>
 {
-    Task<TResponse> Handle(TQuery query, CancellationToken cancellation);
+    Task<Result<TResponse>> Handle(TQuery query, CancellationToken cancellation);
 }
