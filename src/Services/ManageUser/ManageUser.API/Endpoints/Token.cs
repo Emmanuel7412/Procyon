@@ -17,6 +17,6 @@ public sealed class Token : IEndpoint
            return result.Match(
                 onSuccess: response => Results.Ok(response),
                 onFailure: result => Results.Problem(title: result.Error.Code, detail: result.Error.Description, statusCode: result.Error.StatusCode));
-       });
+       }).RequireAuthorization();
     }
 }

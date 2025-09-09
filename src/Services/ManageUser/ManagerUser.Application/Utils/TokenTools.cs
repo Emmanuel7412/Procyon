@@ -16,12 +16,12 @@ public class TokenTools(IConfiguration configuration) : ITokenTools
 
         // Create a symmetric security key using the secret key from the configuration.
         var authSigningKey = new SymmetricSecurityKey
-                        (Encoding.UTF8.GetBytes(configuration["JWT:Key"]!));
+                        (Encoding.UTF8.GetBytes(configuration["Jwt:Key"]!));
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
-            Issuer = configuration["JWT:Issuer"],
-            Audience = configuration["JWT:Audience"],
+            Issuer = configuration["Jwt:Issuer"],
+            Audience = configuration["Jwt:Audience"],
             Subject = new ClaimsIdentity(claims),
             Expires = DateTime.Now.AddMinutes(15),
             SigningCredentials = new SigningCredentials

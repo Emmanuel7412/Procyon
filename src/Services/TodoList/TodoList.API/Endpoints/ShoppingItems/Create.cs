@@ -30,7 +30,7 @@ namespace TodoList.API.Endpoints.ShoppingItems
                 Result<Guid> result = await commandDispatcher.Dispatch<CreateShoppingItemCommand, Guid>(createCommand, cancellationToken);
 
                 return result.Match(Results.Ok, CustomResults.Problem);
-            });
+            }).RequireAuthorization();
         }
     }
 }

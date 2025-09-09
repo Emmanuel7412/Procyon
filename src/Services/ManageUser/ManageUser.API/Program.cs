@@ -17,19 +17,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-// Déclarer la politique CORS
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAngular",
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:4200") // URL de ton app Angular
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
-        });
-});
-
-
 builder.Services
     .AddApplicationServices(builder.Configuration)
     .AddDataInfrastructure(builder.Configuration);
@@ -38,34 +25,50 @@ builder.Services
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
-
+// Déclarer la politique CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowedHosts",
+        policy =>
+        {
+            policy.WithOrigins(builder.Configuration["AllowedHosts"] ?? throw new InvalidOperationException("AllowedHosts not configured."))
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
 
 builder.Services.RegisterQueryHandlers();
 builder.Services.RegisterCommandHandlers();
 
+builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 })
 .AddJwtBearer(options =>
 {
+    options.Events = new JwtBearerEvents
+    {
+        OnAuthenticationFailed = context =>
+        {
+            Console.WriteLine($"Authentication failed: {context.Exception.Message}");
+            return Task.CompletedTask;
+        }
+    };
     options.SaveToken = true;
     options.RequireHttpsMetadata = false; // Set to true in production
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
         ValidateAudience = true,
-        ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],
-        ClockSkew = TimeSpan.Zero,
         IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT signing key not configured (Jwt:Key).")))
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
     };
 });
 
@@ -75,16 +78,46 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Description = "Enter 'Bearer' [space] and then your valid token."
+    });
 
-builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
+    options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
+
+
+builder.Services.AddHttpLogging(options =>
+{
+    options.LoggingFields = Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.All;
+});
 
 var app = builder.Build();
 
 // Utiliser la politique CORS
-app.UseCors("AllowAngular");
+app.UseCors("AllowedHosts");
 
-app.MapEndpoints();
+app.UseHttpsRedirection();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -99,9 +132,11 @@ if (app.Environment.IsDevelopment())
     await app.Services.InitializeDatabaseAsync();
 }
 app.UseExceptionHandler(options => { });
+
+app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapEndpoints();
 app.MapControllers();
-
-
+app.UseHttpLogging();
 app.Run();

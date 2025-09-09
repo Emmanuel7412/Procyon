@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,8 +21,9 @@ namespace TodoList.API.Endpoints.ShoppingItems
 
             Result<List<ShoppingItemDto>> result = await queryDispatcher.Dispatch<GetShoppingListQuery, List<ShoppingItemDto>>(new GetShoppingListQuery(), cancellationToken);
 
+            
             return result.Match(Results.Ok, CustomResults.Problem);
-        });
+        }).RequireAuthorization();
         }
     }
 }
